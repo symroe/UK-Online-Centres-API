@@ -27,7 +27,8 @@ class CentreHandler(BaseHandler):
     def read(self, request, pk):
         centre = Centre.objects.kml().get(pk=pk)
         centre.__dict__['kml_str'] = centre.kml
-        print centre.__dict__
+        del centres_dict[centre.pk]['_state']
+        del centres_dict[centre.pk]['kml']
     
         res =  centre.__dict__
         return [res]
@@ -41,6 +42,7 @@ class NearestCentres(BaseHandler):
         centres_dict = {}        
         for centre in Centre.objects.distance(area).kml().order_by('distance')[:10]:
             centres_dict[centre.pk] = centre.__dict__
+            del centres_dict[centre.pk]['_state']
             centres_dict[centre.pk]['kml_str'] = centre.kml
         res =  centres_dict
         return res
