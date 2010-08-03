@@ -9,8 +9,8 @@ nearest_handler = Resource(NearestCentres)
 
 urlpatterns = patterns('',
     
-    url(r'^(?P<lat>[^/]+)/(?P<lng>[^/]+)/', nearest_handler),
-    url(r'^(?P<pk>[^/]+)/', centre_handler),
+    url(r'^nearest/(?P<lat>[^/]+)/(?P<lng>[^/]+)/', nearest_handler),
+    url(r'^centre/(?P<pk>[^/]+)/', centre_handler),
     url(r'^$', all_centres_handler),
     
     # url(r'^v1/search/(?P<term>[^/]+)/', search_handler),

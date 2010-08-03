@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+    <h2>HTML</h2>
     <ul>
         <li><a href="/centres">All centres</a> as an HTML list with links to the centre info in a DL</li>
     </ul>
@@ -12,11 +13,11 @@
 
     <p>Returns all centres</p>
 
-    <h4 id="_api_clientid">/api/[client<em>id</em>]</h4>
+    <h4 id="_api_clientid">/api/centre/[client_id]</h4>
 
     <p>Returns a single centre object</p>
 
-    <h4 id="_api_lng_lat">/api/[lng]/[lat]</h4>
+    <h4 id="_api_lng_lat">/api/nearest/[lng]/[lat]</h4>
 
     <p>Returns the 10 nearest centers to the lat/lng</p>
 
