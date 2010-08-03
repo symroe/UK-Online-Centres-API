@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <dl>
+    {% for k,v in centre_fields.items %}
+        {% if v %}
+        <dt>{{ k }}</dt>
+        <dd>{{ v }}</dd>
+        {% endif %}
+    {% endfor %}
+    </dl>
+{% endblock %}

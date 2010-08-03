@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+    <ul>
+    {% for centre in centres %}
+        <li><a href="{{ centre.get_absolute_url }}">{{ centre.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
