@@ -3,4 +3,34 @@
     <ul>
         <li><a href="/centres">All centres</a> as an HTML list with links to the centre info in a DL</li>
     </ul>
+    
+    <h2 id="api">API</h2>
+
+    <h3 id="calls">Calls:</h3>
+
+    <h4 id="_api_">/api/</h4>
+
+    <p>Returns all centres</p>
+
+    <h4 id="_api_clientid">/api/[client<em>id</em>]</h4>
+
+    <p>Returns a single centre object</p>
+
+    <h4 id="_api_lng_lat">/api/[lng]/[lat]</h4>
+
+    <p>Returns the 10 nearest centers to the lat/lng</p>
+
+    <h3 id="formats">Formats</h3>
+
+    <p>Add ?format=[json|xml|yaml|kml] to any query to change the output format.</p>
+
+    <p>Add ?format=json&amp;callback=[callback] for JSONP</p>
+
+    <h2 id="about">About</h2>
+
+    <p>Hack together by <a href="http://twitter.com/symroe">@symroe</a> before <strong>#RSGetO</strong></p>
+
+    <p>Please ask for more features :)</p>
+
+    
 {% endblock %}
