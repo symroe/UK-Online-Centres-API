@@ -38,4 +38,9 @@ class NearestCentres(BaseHandler):
     
     def read(self, request, lat, lng):
         area = Point(map(float, (lat, lng)))
-        return Centre.objects.distance(area).order_by('distance')[:10]
+        centres_dict = {}        
+        for centre in Centre.objects.distance(area).kml().order_by('distance')[:10]:
+            centres_dict[centre.pk] = centre.__dict__
+            centres_dict[centre.pk]['kml_str'] = centre.kml
+        res =  centres_dict
+        return res
