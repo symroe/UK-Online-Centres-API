@@ -3,6 +3,7 @@ import urllib
 import re
 
 from piston.handler import BaseHandler
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.gis.geos import Point
 
 from ukonline.models import *
@@ -67,13 +68,13 @@ class NearestCentres(BaseHandler):
         res =  centers_list
         return res
 
-class Nearest(BaseHandler):
-    allowed_methods = ('GET',)
-    model = Centre
-    
-    def read(self, request, lookup):
-        lookup = lookup.upper()
 
+class Nearest(BaseHandler):
+    allowed_methods = ('GET', 'POST')
+    model = Centre
+    csrf_exempt = True
+    def read(self, request, text):
+        lookup = text.upper()
         if re.match("|".join(POSTAL_ZONES), lookup):
             # postcode lookup
             mapit_url =  "http://mapit.mysociety.org/postcode/partial/%s" % lookup
@@ -96,3 +97,6 @@ class Nearest(BaseHandler):
             centers_list.append(centre_dict)
         res =  centers_list
         return res
+
+    def create(self, request):
+        return self.read(request, request.POST['text'])

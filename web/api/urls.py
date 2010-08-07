@@ -10,6 +10,7 @@ nearest_handler = Resource(Nearest)
 
 urlpatterns = patterns('',
     
+    url(r'^nearest/', nearest_handler),
     url(r'^nearest/(?P<lookup>[^/]+)/', nearest_handler),
     # url(r'^nearest_by_lat_lon/(?P<lat>[^/]+)/(?P<lng>[^/]+)/', nearest_handler),
     # url(r'^nearest_by_postcode/(?P<postcode>[^/]+)/', nearest_postcode_handler),
