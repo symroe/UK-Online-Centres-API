@@ -23,7 +23,9 @@ POSTAL_ZONES = ('AB', 'AL', 'B' , 'BA', 'BB', 'BD', 'BH', 'BL', 'BN', 'BR',
                 'WS', 'WV', 'YO', 'ZE')
 
 
-def sms(request, lookup):
+def sms(request, lookup=None):
+    if request.POST.get('text'):
+        lookup = request.POST['text']
     lookup = lookup.upper()
     if lookup.startswith('UKONLINE'):
         lookup = lookup[8:].strip()
