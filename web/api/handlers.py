@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+
 import json
 import urllib
 import re
@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.gis.geos import Point
 
 from ukonline.models import *
+import views
 
 POSTAL_ZONES = ('AB', 'AL', 'B' , 'BA', 'BB', 'BD', 'BH', 'BL', 'BN', 'BR',
                 'BS', 'BT', 'CA', 'CB', 'CF', 'CH', 'CM', 'CO', 'CR', 'CT',
@@ -71,7 +72,7 @@ class NearestCentres(BaseHandler):
 
 
 class Nearest(BaseHandler):
-    allowed_methods = ('GET', 'POST')
+    allowed_methods = ('GET',)
     model = Centre
 
 
@@ -108,43 +109,4 @@ class Nearest(BaseHandler):
             centers_list.append(centre_dict)
         res =  centers_list
         return res
-
-    def create(self, request):
-        text = request.POST.get('text')
-        lookup = text.upper()
-        if lookup.startswith('UKONLINE'):
-            lookup = lookup[8:].strip()
-        
-        print lookup
-        centres = None
-        
-        if re.match("|".join(POSTAL_ZONES), lookup):
-            try:
-                # postcode lookup
-                mapit_url =  "http://mapit.mysociety.org/postcode/partial/%s" % lookup
-                mapit = json.load(urllib.urlopen(mapit_url))
-                area = Point(map(float, (mapit['wgs84_lon'], mapit['wgs84_lat'])), 0)
-                centres = Centre.objects.distance(area).kml().order_by('distance')[:10]
-            except:
-                pass
-        if not centres:
-            kwargs = {
-                'town__icontains' : lookup,
-                # 'county__search' : lookup,
-            }
-            centres = Centre.objects.filter(town__icontains=lookup) | Centre.objects.filter(county__icontains=lookup)
-            centres = centres.kml()[:10]
-        
-        centers_list = []
-        for centre in centres:
-            centre_dict = centre.__dict__
-            del centre_dict['_state']
-            centre_dict['kml_str'] = centre.kml
-            centers_list.append(centre_dict)
-        res =  centers_list
-        return res        
-
-
-
-
 

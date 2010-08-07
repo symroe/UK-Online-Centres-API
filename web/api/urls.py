@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'^nearest/', nearest_handler),
     # url(r'^nearest_by_lat_lon/(?P<lat>[^/]+)/(?P<lng>[^/]+)/', nearest_handler),
     # url(r'^nearest_by_postcode/(?P<postcode>[^/]+)/', nearest_postcode_handler),
+    url(r'^sms/(?P<lookup>[^/]+)/', views.sms),
+
     url(r'^centre/(?P<pk>[^/]+)/', centre_handler),
     url(r'^$', all_centres_handler),
     
