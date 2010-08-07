@@ -76,13 +76,20 @@ class Nearest(BaseHandler):
 
     def read(self, request, text):
         lookup = text.upper()
+        
+        print lookup
+        centres = None
+        
         if re.match("|".join(POSTAL_ZONES), lookup):
-            # postcode lookup
-            mapit_url =  "http://mapit.mysociety.org/postcode/partial/%s" % lookup
-            mapit = json.load(urllib.urlopen(mapit_url))
-            area = Point(map(float, (mapit['wgs84_lon'], mapit['wgs84_lat'])), 0)
-            centres = Centre.objects.distance(area).kml().order_by('distance')[:10]
-        else:
+            try:
+                # postcode lookup
+                mapit_url =  "http://mapit.mysociety.org/postcode/partial/%s" % lookup
+                mapit = json.load(urllib.urlopen(mapit_url))
+                area = Point(map(float, (mapit['wgs84_lon'], mapit['wgs84_lat'])), 0)
+                centres = Centre.objects.distance(area).kml().order_by('distance')[:10]
+            except:
+                pass
+        if not centres:
             kwargs = {
                 'town__icontains' : lookup,
                 # 'county__search' : lookup,
