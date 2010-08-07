@@ -76,6 +76,8 @@ class Nearest(BaseHandler):
 
     def read(self, request, text):
         lookup = text.upper()
+        if lookup.startswith('UKONLINE'):
+            lookup = lookup[8:].strip()
         
         print lookup
         centres = None

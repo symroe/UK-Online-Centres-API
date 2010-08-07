@@ -33,6 +33,9 @@ class SMSEmitter(Emitter):
     def render(self, request):
 
         data = self.construct()
-        return data[0]['sms']
+        try:
+            return data[0]['sms']
+        except:
+            return "Sorry, nothing found"
 
 Emitter.register('sms', SMSEmitter)
