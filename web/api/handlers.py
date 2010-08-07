@@ -1,3 +1,4 @@
+from django.http import HttpResponse, HttpResponseRedirect
 import json
 import urllib
 import re
@@ -109,4 +110,41 @@ class Nearest(BaseHandler):
         return res
 
     def create(self, request):
-        self.read(request, request.POST['text'])
+        text = request.POST.get('text')
+        lookup = text.upper()
+        if lookup.startswith('UKONLINE'):
+            lookup = lookup[8:].strip()
+        
+        print lookup
+        centres = None
+        
+        if re.match("|".join(POSTAL_ZONES), lookup):
+            try:
+                # postcode lookup
+                mapit_url =  "http://mapit.mysociety.org/postcode/partial/%s" % lookup
+                mapit = json.load(urllib.urlopen(mapit_url))
+                area = Point(map(float, (mapit['wgs84_lon'], mapit['wgs84_lat'])), 0)
+                centres = Centre.objects.distance(area).kml().order_by('distance')[:10]
+            except:
+                pass
+        if not centres:
+            kwargs = {
+                'town__icontains' : lookup,
+                # 'county__search' : lookup,
+            }
+            centres = Centre.objects.filter(town__icontains=lookup) | Centre.objects.filter(county__icontains=lookup)
+            centres = centres.kml()[:10]
+        
+        centers_list = []
+        for centre in centres:
+            centre_dict = centre.__dict__
+            del centre_dict['_state']
+            centre_dict['kml_str'] = centre.kml
+            centers_list.append(centre_dict)
+        res =  centers_list
+        return res        
+
+
+
+
+
