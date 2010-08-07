@@ -72,7 +72,8 @@ class NearestCentres(BaseHandler):
 class Nearest(BaseHandler):
     allowed_methods = ('GET', 'POST')
     model = Centre
-    csrf_exempt = True
+
+
     def read(self, request, text):
         lookup = text.upper()
         if re.match("|".join(POSTAL_ZONES), lookup):
