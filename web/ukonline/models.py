@@ -51,10 +51,10 @@ class Centre(geo_models.Model):
     charges = models.TextField(blank=True, null=True)
     penportrait = models.TextField(blank=True, null=True)
     numworkstations = models.TextField(blank=True, null=True)
+    sms = models.TextField(blank=True, null=True)
 
     objects = geo_models.GeoManager()
-    
-    
+        
     def __unicode__(self):
         return self.name
     

@@ -13,7 +13,7 @@ from ukonline import models
 class Command(BaseCommand):
     
     def handle(self, **options):
-        Centres
+        # Centres
         all_centres = csv.DictReader(open('ukonline/fixtures/centre.csv'))
         for centre in all_centres:
             try:

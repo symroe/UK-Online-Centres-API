@@ -1,4 +1,5 @@
 from piston.emitters import Emitter
+from piston.utils import rc
 from django.shortcuts import render_to_response
 
 KML_MIMETYPE = 'application/vnd.google-earth.kml+xml; charset=utf-8'
@@ -26,3 +27,12 @@ class KMLEmitter(Emitter):
         return render_to_response('kml.html', context, mimetype=KML_MIMETYPE)
 
 Emitter.register('kml', KMLEmitter, KML_MIMETYPE)
+
+class SMSEmitter(Emitter):
+
+    def render(self, request):
+
+        data = self.construct()
+        return data[0]['sms']
+
+Emitter.register('sms', SMSEmitter)
