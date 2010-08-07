@@ -34,8 +34,9 @@ class SMSEmitter(Emitter):
 
         data = self.construct()
         try:
-            return data[0]['sms']
-        except:
+            return render_to_response('sms.html', { 'text' : data[0]['sms'] }, mimetype='text/plan')
+        except Exception, e:
+            print e
             return "Sorry, nothing found"
 
 Emitter.register('sms', SMSEmitter)

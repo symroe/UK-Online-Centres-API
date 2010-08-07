@@ -4,7 +4,7 @@ import os
 
 
 # The absolute path to the app
-root_path = '/var/www/ukonline'
+root_path = '/var/www/ukonline/'
 # python path to the django settings
 django_settings_module = 'web.settings'
 # Python version
