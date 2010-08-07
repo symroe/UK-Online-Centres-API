@@ -13,6 +13,7 @@ from ukonline import models
 class Command(BaseCommand):
     
     def handle(self, **options):
+        Centres
         all_centres = csv.DictReader(open('ukonline/fixtures/centre.csv'))
         for centre in all_centres:
             try:
@@ -24,3 +25,21 @@ class Command(BaseCommand):
                 C.location = Point(map(float, (centre.get('longitude'), centre.get('latitude'))))
             C.save()
         
+        # JulyData (don't ask)
+        all_july_data = csv.DictReader(open('ukonline/fixtures/july_data.csv', 'rU'))
+        print all_july_data
+        for july in all_july_data:
+            try:
+                C = models.Centre.objects.get(pk=july['centre_id'])
+                try:
+                    J = models.JulyData.objects.get(pk=C)
+                except:
+                    J = models.JulyData(pk=C)
+                J.__dict__.update(july)
+                J.save()
+
+            except Exception, e:
+                pass
+                # print e
+                # print july['centre_id']
+                # print "No centre"

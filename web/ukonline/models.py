@@ -60,7 +60,26 @@ class Centre(geo_models.Model):
     
     # @models.permalink
     def get_absolute_url(self):
-        print 'assd'
-        print slugify(self.name)
-        print reverse('centre', kwargs={ 'pk' : self.pk, 'slug' : slugify(self.name) })
         return reverse('centre', kwargs={ 'pk': self.pk, 'slug' : slugify(self.name) })
+
+class JulyData(models.Model):
+    client_id = models.ForeignKey(Centre, primary_key=True)
+    centre_name = models.TextField(blank=True, null=True)
+    sector_type = models.TextField(blank=True, null=True)
+    mla_authority = models.TextField(blank=True, null=True)
+    champion = models.TextField(blank=True, null=True)
+    cascade_centre = models.TextField(blank=True, null=True)
+    direct = models.TextField(blank=True, null=True)
+    july_regs = models.TextField(blank=True, null=True)
+    ytd_regs  = models.TextField(blank=True, null=True)
+    
+    
+    
+    
+    
+    
+
+
+
+
+
