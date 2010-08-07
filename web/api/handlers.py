@@ -109,4 +109,4 @@ class Nearest(BaseHandler):
         return res
 
     def create(self, request):
-        return self.read(request, request.POST['text'])
+        self.read(request, request.POST['text'])
